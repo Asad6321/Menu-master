@@ -43,7 +43,6 @@
             align-items: center;
             text-align: center;
             height: 400px;
-            /* Set a fixed height for the card */
         }
 
         .card:hover {
@@ -53,10 +52,8 @@
         model-viewer {
             width: 100%;
             height: 200px;
-            /* Set a fixed height for the 3D model */
             margin: 0 auto;
             background: #f0f0f0;
-            /* Optional: Add a background color for better visibility */
         }
 
         .card h3 {
@@ -66,7 +63,6 @@
         .card p {
             margin: 10px 0;
             flex-grow: 1;
-            /* Allow the description to take up remaining space */
         }
 
         .add-btn {
@@ -128,25 +124,24 @@
             justify-content: space-between;
             margin-top: 40px;
             padding: 20px;
-         
             border-radius: 10px;
         }
 
         .special-image {
             position: relative;
             width: 50%;
-            z-index: 1; /* Ensure the 3D model is above the text */
+            z-index: 1;
         }
 
         .special-image model-viewer {
             width: 100%;
-            height: 300px; /* Adjust height as needed */
+            height: 300px;
             background: transparent;
         }
 
         .special-text {
             width: 45%;
-            z-index: 0; /* Ensure text is behind the 3D model */
+            z-index: 0;
         }
 
         .special-text h2 {
@@ -328,7 +323,8 @@
                         </model-viewer>
                         <div class="dish-details">
                             <h3>Biryani</h3>
-                            <p class="dish-description">A fragrant and flavorful rice dish layered with marinated meat and
+                            <p class="dish-description">A fragrant and flavorful rice dish layered with marinated meat
+                                and
                                 aromatic spices.</p>
                             <div class="dish-info">
                                 <p><strong>Ingredients:</strong> Rice, Chicken, Saffron, Cumin, Cardamom, Cloves</p>
@@ -390,7 +386,8 @@
                             <p class="dish-description">Marinated paneer cubes grilled to perfection, served with mint
                                 chutney.</p>
                             <div class="dish-info">
-                                <p><strong>Ingredients:</strong> Paneer, Yogurt, Bell Peppers, Turmeric, Chili Powder</p>
+                                <p><strong>Ingredients:</strong> Paneer, Yogurt, Bell Peppers, Turmeric, Chili Powder
+                                </p>
                                 <p><strong>Prep Time:</strong> 25 mins</p>
                                 <p><strong> Serves:</strong> 2-3 people</p>
                                 <p class="price"><strong>Price:</strong> 300</p>
@@ -437,6 +434,11 @@
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function () {
+            emailjs.init('uqI2tRF7CahmHk8q1'); // Replace with your EmailJS public key
+        })();
+
         // JavaScript for Carousel Functionality
         let currentIndex = 0;
         const carouselTrack = document.querySelector('.carousel-track');
@@ -582,10 +584,12 @@
          ${item.customizations ? 'Customizations: ' + formatCustomizations(item.customizations) : ''}`
             ).join('\n');
 
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
             const emailData = {
                 to_email: "sujalbagde27@gmail.com",
                 subject: "New Order Received!",
-                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`
+                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${totalAmount}`
             };
 
             // Send email using EmailJS
@@ -595,7 +599,8 @@
                     cart = [];
                     updateCartDisplay();
                     document.getElementById('cartSidebar').classList.remove('active');
-                }, (error) => {
+                })
+                .catch((error) => {
                     alert('Failed to send order. Please try again.');
                     console.error('Email failed:', error);
                 });
@@ -648,11 +653,6 @@
                 button.addEventListener('click', (e) => {
                     const modalId = e.target.dataset.modal;
                     const modal = document.getElementById(modalId);
-
-                    if (!modal) {
-                        console.error(`Modal with id ${modalId} not found!`);
-                        return;
-                    }
 
                     // Reset customization section
                     modal.querySelector('.customize-section').style.display = 'none';
