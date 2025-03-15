@@ -1,18 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Indian Menu</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="/venders/styles.css">
-    
-        <!-- 3D model viewer -->
-        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-    
-        <!-- EmailJS SDK -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    </head>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>French Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/venders/styles.css">
+
+    <!-- 3D model viewer -->
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <style>
+        /* Add this to your existing CSS */
+        .menu-carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding: 20px 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            gap: 20px;
+            padding: 0 20px;
+        }
+
+        .card {
+            flex: 0 0 auto;
+            width: 300px;
+            margin-right: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            height: 400px;
+            /* Set a fixed height for the card */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        model-viewer {
+            width: 100%;
+            height: 200px;
+            /* Set a fixed height for the 3D model */
+            margin: 0 auto;
+            background: #f0f0f0;
+            /* Optional: Add a background color for better visibility */
+        }
+
+        .card h3 {
+            margin: 10px 0;
+        }
+
+        .card p {
+            margin: 10px 0;
+            flex-grow: 1;
+            /* Allow the description to take up remaining space */
+        }
+
+        .add-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+        }
+
+        .pagination-dots {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #ccc;
+            border-radius: 50%;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .dot.active {
+            background: #333;
+        }
+    </style>
+</head>
 
 <body>
     <div class="cart-container">
@@ -26,20 +134,20 @@
         <h2>Your Cart</h2>
         <div id="cartItems"></div>
         <p>Total: ₹<span id="cartTotal">0</span></p>
-        <button onclick="checkout()" style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+        <button onclick="checkout()"
+            style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
     </div>
 
     <div class="indian-menu-container">
         <div class="menu-container">
-            <!-- Navigation -->
-
-
             <!-- Hero Section -->
             <section class="hero-section">
                 <div>
                     <h1>French Favorit</h1>
                     <p>
-                        Our French dishes are crafted with fresh, high-quality ingredients, rich flavors, and time-honored culinary techniques. From buttery pastries to creamy sauces and delicate herbs, each dish embodies the elegance and sophistication of French cuisine.
+                        Our French dishes are crafted with fresh, high-quality ingredients, rich flavors, and
+                        time-honored culinary techniques. From buttery pastries to creamy sauces and delicate herbs,
+                        each dish embodies the elegance and sophistication of French cuisine.
                     </p>
                 </div>
                 <div class="hero-image">
@@ -47,262 +155,273 @@
                 </div>
             </section>
 
-            <!-- Menu Cards -->
-            <section class="menu-cards">
-                <div class="card">
-                    <!-- <img src="https://i.pinimg.com/736x/06/d6/70/06d6709e2a812c98f2a4e997409d7cd2.jpg" alt="Mie Geprek"> -->
-                    <model-viewer src="../assets/menu_images/3d_glb/con_11.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <h3>Coq au Vin</h3>
-                    <p>A classic French dish featuring chicken slow-cooked in red wine with mushrooms, onions, and herbs for rich, deep flavors.
-                    </p>
-                    <button class="add-btn" data-modal="modal-Coq">+</button>
+            <!-- Menu Cards Carousel -->
+            <section class="menu-carousel">
+                <button class="carousel-button prev" onclick="shiftDishes(-1)">&#10094;</button>
+                <div class="carousel-track">
+                    <!-- Coq au Vin -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/con_11.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Coq au Vin</h3>
+                        <p>A classic French dish featuring chicken slow-cooked in red wine with mushrooms, onions, and
+                            herbs for rich, deep flavors.</p>
+                        <button class="add-btn" data-modal="modal-Coq">+</button>
+                    </div>
+
+                    <!-- Ratatouille -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/Ratatouille.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Ratatouille</h3>
+                        <p>A vibrant vegetable medley made with tomatoes, zucchini, eggplant, and bell peppers, simmered
+                            with aromatic herbs.</p>
+                        <button class="add-btn" data-modal="modal-ratatouille">+</button>
+                    </div>
+
+                    <!-- Crème Brûlée -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/Crème.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Crème Brûlée</h3>
+                        <p>A creamy vanilla custard dessert topped with a caramelized sugar crust, offering a perfect
+                            balance of texture and sweetness.</p>
+                        <button class="add-btn" data-modal="modal-creme">+</button>
+                    </div>
                 </div>
-                <div class="card">
-                    <!-- <img src="https://i.pinimg.com/736x/fb/bc/c7/fbbcc7ed5172a45c8a1114433ea02b8b.jpg" alt="Mie Ayam"> -->
-                    <model-viewer src="../assets/menu_images/3d_glb/Ratatouille.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <h3>Ratatouille  </h3>
-                    <p>A vibrant vegetable medley made with tomatoes, zucchini, eggplant, and bell peppers, simmered with aromatic herbs.</p>
-                    <button class="add-btn" data-modal="modal-ratatouille">+</button>
-                </div>
-                <div class="card">
-                    <!-- <img src="https://i.pinimg.com/736x/f5/5a/bd/f55abd06f1bc68fdd0d6ebce97ad6090.jpg" alt="Mie Goreng"> -->
-                    <model-viewer src="../assets/menu_images/3d_glb/Crème.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <h3>Crème Brûlée</h3>
-                    <p> A creamy vanilla custard dessert topped with a caramelized sugar crust, offering a perfect balance of texture and sweetness.</p>
-                    <button class="add-btn" data-modal="modal-creme">+</button>
-                </div>
+                <button class="carousel-button next" onclick="shiftDishes(1)">&#10095;</button>
             </section>
+
+            <!-- Pagination Dots -->
+            <div class="pagination-dots">
+                <span class="dot active" onclick="goToDish(0)"></span>
+                <span class="dot" onclick="goToDish(1)"></span>
+                <span class="dot" onclick="goToDish(2)"></span>
+            </div>
 
             <!-- Special Dish Section -->
             <section class="special-dish">
                 <div class="special-image">
-                    <!-- <img src="https://i.pinimg.com/736x/4c/68/79/4c6879fd26d280842c93bfd46ebda425.jpg" alt="Gado-gado"> -->
-                    <model-viewer src="../assets/menu_images/3d_glb/french_dish.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
+                    <model-viewer src="../assets/menu_images/3d_glb/french_dish.glb" alt="3D Model" auto-rotate
+                        camera-controls ar></model-viewer>
                 </div>
                 <div class="special-text">
                     <h2>Our French Dish Secret<h2>
-                    <p>
-                        At our restaurant, we craft authentic French dishes using the finest ingredients, rich flavors, and classic cooking techniques. From buttery pastries to elegant sauces, every dish is made with passion to bring you the true taste of France.
-                    </p>
+                            <p>
+                                At our restaurant, we craft authentic French dishes using the finest ingredients, rich
+                                flavors, and classic cooking techniques. From buttery pastries to elegant sauces, every
+                                dish is made with passion to bring you the true taste of France.
+                            </p>
                 </div>
             </section>
 
-           <!-- Cou aq vin model -->
-           <div class="modal" id="modal-Coq">
-            <div class="modal-content">
-                <span class="close-btn">×</span>
-                <h1 class="modal-title">You Made a Delicious Choice!</h1>
-                <div class="modal-dish">
-                    <model-viewer src="../assets/menu_images/3d_glb/con_11.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <div class="dish-details">
-                        <h3>Coq au Vin</h3>
-                        <p class="dish-description"> A rich and hearty French stew with chicken braised in red wine and aromatic herbs.</p>
-                        <div class="dish-info">
-                            <p><strong>Ingredients:</strong> Chicken, Red Wine, Mushrooms, Onions, Garlic, Thyme
-                            </p>
-                            <p><strong>Prep Time:</strong> 30 mins</p>
-                            <p><strong> Serves:</strong> 2-3 people</p>
-                            <p class="price"><strong>Price</strong> 200</p>
+            <!-- Modals for each dish -->
+            <!-- Coq au Vin Modal -->
+            <div class="modal" id="modal-Coq">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/con_11.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Coq au Vin</h3>
+                            <p class="dish-description">A rich and hearty French stew with chicken braised in red wine
+                                and aromatic herbs.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Chicken, Red Wine, Mushrooms, Onions, Garlic, Thyme</p>
+                                <p><strong>Prep Time:</strong> 30 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 200</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-buttons">
-                    <button class="order-btn">Place Order</button>
-                    <button class="customize-btn">Customize Your Dish</button>
-                </div>
-                <div class="customize-section" id="customize-murgh">
-                    <h2>Customize Your Delight</h2>
-                    <div class="customize-options">
-                        <div class="option">
-                            <label>Spice Level:</label>
-                            <select>
-                                <option>Mild</option>
-                                <option>Medium</option>
-                                <option>Spicy</option>
-                                <option>Extra Spicy</option>
-                            </select>
-                        </div>
-                        <div class="option">
-                            <label>Add Extra:</label>
-                            <input type="checkbox" id="extraChicken"> Extra Chicken
-                            <input type="checkbox" id="extraNaan"> Extra Mushrooms
-                            <input type="checkbox" id="extraRice"> 
-                        </div>
-                        <div class="option">
-                            <label>Remove:</label>
-                            <input type="checkbox" id="noTomato"> No Wine
-                            <input type="checkbox" id="noCream"> No Garlic
-                        </div>
-                        <div class="option">
-                            <label>Special Notes:</label>
-                            <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
-                        </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
                     </div>
-                    <button class="save-customization">Save & Order</button>
+                    <div class="customize-section" id="customize-Coq">
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraChicken"> Extra Chicken
+                                <input type="checkbox" id="extraMushrooms"> Extra Mushrooms
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noWine"> No Wine
+                                <input type="checkbox" id="noGarlic"> No Garlic
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
                 </div>
             </div>
-            </div>
-           <!-- coq au vin ends model -->
+            <!-- Coq au Vin Modal Ends -->
 
-           <!--Ratatouille model starts  -->
-           <div class="modal" id="modal-ratatouille">
-            <div class="modal-content">
-                <span class="close-btn">×</span>
-                <h1 class="modal-title">You Made a Delicious Choice!</h1>
-                <div class="modal-dish">
-                    <model-viewer src="../assets/menu_images/3d_glb/Ratatouille.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <div class="dish-details">
-                        <h3>Ratatouille </h3>
-                        <p class="dish-description">A classic French vegetable stew with a medley of slow-cooked, flavorful ingredients.</p>
-                        <div class="dish-info">
-                            <p><strong>Ingredients:</strong> Tomatoes, Zucchini, Eggplant, Bell Peppers, Garlic, Herbs
-                            </p>
-                            <p><strong>Prep Time:</strong> 35 mins</p>
-                            <p><strong> Serves:</strong> 2-3 people</p>
-                            <p class="price"><strong>Price</strong> 300</p>
+            <!-- Ratatouille Modal -->
+            <div class="modal" id="modal-ratatouille">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/Ratatouille.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Ratatouille</h3>
+                            <p class="dish-description">A classic French vegetable stew with a medley of slow-cooked,
+                                flavorful ingredients.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Tomatoes, Zucchini, Eggplant, Bell Peppers, Garlic,
+                                    Herbs</p>
+                                <p><strong>Prep Time:</strong> 35 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 300</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-buttons">
-                    <button class="order-btn">Place Order</button>
-                    <button class="customize-btn">Customize Your Dish</button>
-                </div>
-                <div class="customize-section" id="customize-murgh">
-                    <h2>Customize Your Delight</h2>
-                    <div class="customize-options">
-                        <div class="option">
-                            <label>Spice Level:</label>
-                            <select>
-                                <option>Mild</option>
-                                <option>Medium</option>
-                                <option>Spicy</option>
-                                <option>Extra Spicy</option>
-                            </select>
-                        </div>
-                        <div class="option">
-                            <label>Add Extra:</label>
-                            <input type="checkbox" id="extraChicken"> Extra Vegetables
-                            <input type="checkbox" id="extraNaan"> Cheese
-                            <input type="checkbox" id="extraRice"> Bread
-                        </div>
-                        <div class="option">
-                            <label>Remove:</label>
-                            <input type="checkbox" id="noTomato"> No Garlic
-                            <input type="checkbox" id="noCream"> No Bell Peppers
-                        </div>
-                        <div class="option">
-                            <label>Special Notes:</label>
-                            <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
-                        </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
                     </div>
-                    <button class="save-customization">Save & Order</button>
+                    <div class="customize-section" id="customize-ratatouille">
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraVegetables"> Extra Vegetables
+                                <input type="checkbox" id="extraCheese"> Cheese
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noGarlic"> No Garlic
+                                <input type="checkbox" id="noBellPeppers"> No Bell Peppers
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
                 </div>
             </div>
-            </div>
-           <!--Ratatouille model starts  -->
+            <!-- Ratatouille Modal Ends -->
 
-           <!--Crème Brûlée model starts  -->
-           <div class="modal" id="modal-creme">
-            <div class="modal-content">
-                <span class="close-btn">×</span>
-                <h1 class="modal-title">You Made a Delicious Choice!</h1>
-                <div class="modal-dish">
-                    <model-viewer src="../assets/menu_images/3d_glb/Crème.glb" 
-                    alt="3D Model" 
-                    auto-rotate 
-                    camera-controls 
-                    ar> 
-                    </model-viewer>
-                    <div class="dish-details">
-                        <h3>Crème Brûlée</h3>
-                        <p class="dish-description">A rich and creamy custard dessert with a caramelized sugar topping.</p>
-                        <div class="dish-info">
-                            <p><strong>Ingredients:</strong> Cream, Egg Yolks, Sugar, Vanilla, Caramelized Sugar
-                            </p>
-                            <p><strong>Prep Time:</strong> 40 mins</p>
-                            <p><strong> Serves:</strong> 2-3 people</p>
-                            <p class="price"><strong>Price</strong> 500</p>
+            <!-- Crème Brûlée Modal -->
+            <div class="modal" id="modal-creme">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/Crème.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Crème Brûlée</h3>
+                            <p class="dish-description">A rich and creamy custard dessert with a caramelized sugar
+                                topping.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Cream, Egg Yolks, Sugar, Vanilla, Caramelized Sugar</p>
+                                <p><strong>Prep Time:</strong> 40 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 500</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-buttons">
-                    <button class="order-btn">Place Order</button>
-                    <button class="customize-btn">Customize Your Dish</button>
-                </div>
-                <div class="customize-section" id="customize-murgh">
-                    <h2>Customize Your Delight</h2>
-                    <div class="customize-options">
-                        <div class="option">
-                            <label>Spice Level:</label>
-                            <select>
-                                <option>Mild</option>
-                                <option>Medium</option>
-                                <option>Spicy</option>
-                                <option>Extra Spicy</option>
-                            </select>
-                        </div>
-                        <div class="option">
-                            <label>Add Extra:</label>
-                            <input type="checkbox" id="extraChicken"> Extra Caramelized Sugar
-                            <input type="checkbox" id="extraNaan"> Fresh Berries
-                        </div>
-                        <div class="option">
-                            <label>Remove:</label>
-                            <input type="checkbox" id="noTomato"> No Vanilla
-                            <input type="checkbox" id="noCream"> No Caramelized Sugar
-                        </div>
-                        <div class="option">
-                            <label>Special Notes:</label>
-                            <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
-                        </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
                     </div>
-                    <button class="save-customization">Save & Order</button>
+                    <div class="customize-section" id="customize-creme">
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraCaramel"> Extra Caramelized Sugar
+                                <input type="checkbox" id="extraBerries"> Fresh Berries
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noVanilla"> No Vanilla
+                                <input type="checkbox" id="noCaramel"> No Caramelized Sugar
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
                 </div>
             </div>
-            </div>
-           <!-- Crème Brûlée model ends -->
+            <!-- Crème Brûlée Modal Ends -->
         </div>
-
     </div>
 
     <script>
-        (function () {
-            emailjs.init('uqI2tRF7CahmHk8q1'); // Replace with your EmailJS public key
-        })();
+        // JavaScript for Carousel Functionality
+        let currentIndex = 0;
+        const carouselTrack = document.querySelector('.carousel-track');
+        const cards = document.querySelectorAll('.card');
+        const cardWidth = cards[0].offsetWidth + 20; // Card width + margin
+        const dots = document.querySelectorAll('.dot');
 
-        // Cart functionality
+        function shiftDishes(direction) {
+            currentIndex = (currentIndex + direction + cards.length) % cards.length;
+            const offset = -currentIndex * (cardWidth + 20); // Account for gap
+            carouselTrack.style.transform = `translateX(${offset}px)`;
+            updateDots();
+        }
+
+        function goToDish(index) {
+            currentIndex = index;
+            const offset = -currentIndex * (cardWidth + 20); // Account for gap
+            carouselTrack.style.transform = `translateX(${offset}px)`;
+            updateDots();
+        }
+
+        function updateDots() {
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        // Cart Functionality
         let cart = [];
         const menuContainer = document.querySelector('.menu-container');
+
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
             cartSidebar.classList.toggle('active');
@@ -331,20 +450,20 @@
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 
             cartItems.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-            <div>
-                <h4>${item.name}</h4>
-                ${item.customizations ? `<small>${formatCustomizations(item.customizations)}</small>` : ''}
-                <p>₹${item.price * item.quantity}</p>
-            </div>
-            <div class="cart-item-controls">
-                <button onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
-                <span>${item.quantity}</span>
-                <button onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
-                <button onclick="removeItem(${index})">×</button>
-            </div>
-        </div>
-    `).join('');
+                <div class="cart-item">
+                    <div>
+                        <h4>${item.name}</h4>
+                        ${item.customizations ? `<small>${formatCustomizations(item.customizations)}</small>` : ''}
+                        <p>₹${item.price * item.quantity}</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
+                        <button onclick="removeItem(${index})">×</button>
+                    </div>
+                </div>
+            `).join('');
 
             cartTotal.textContent = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
@@ -478,13 +597,16 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Existing DOMContentLoaded code...
-
             // Update add button event listeners
             document.querySelectorAll('.add-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const modalId = e.target.dataset.modal;
                     const modal = document.getElementById(modalId);
+
+                    if (!modal) {
+                        console.error(`Modal with id ${modalId} not found!`);
+                        return;
+                    }
 
                     // Reset customization section
                     modal.querySelector('.customize-section').style.display = 'none';
@@ -510,37 +632,6 @@
                     document.body.style.overflow = 'hidden';
                 });
             });
-            // Order confirmation animation
-
-
-            // Existing parallax and hover effects
-            window.addEventListener('scroll', () => {
-                const cards = menuContainer.querySelectorAll('.card');
-                cards.forEach(card => {
-                    const cardPosition = card.getBoundingClientRect().top;
-                    const screenPosition = window.innerHeight / 1.3;
-                    if (cardPosition < screenPosition) {
-                        card.style.transform = 'rotateY(0deg) translateZ(20px)';
-                    }
-                });
-            });
-
-            const images = menuContainer.querySelectorAll('img');
-            images.forEach(img => {
-                img.addEventListener('mousemove', (e) => {
-                    const rect = img.getBoundingClientRect();
-                    const centerX = rect.left + rect.width / 2;
-                    const centerY = rect.top + rect.height / 2;
-                    const mouseX = e.clientX - centerX;
-                    const mouseY = e.clientY - centerY;
-                    const rotateX = (mouseY / 20) * -1;
-                    const rotateY = (mouseX / 20);
-                    img.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                });
-                img.addEventListener('mouseleave', () => {
-                    img.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
-                });
-            });
         });
 
         // Additional animation keyframes
@@ -557,9 +648,7 @@
     `;
         document.head.appendChild(styleSheet);
     </script>
-        
-   
-   
 </body>
 <script src="/venders/script.js"></script>
+
 </html>
