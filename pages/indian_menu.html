@@ -14,12 +14,19 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        /* Add this to your existing CSS */
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+        }
+
         .menu-carousel {
             position: relative;
             overflow: hidden;
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 50px;
         }
 
         .carousel-track {
@@ -53,16 +60,19 @@
             width: 100%;
             height: 200px;
             margin: 0 auto;
-            background: #f0f0f0;
+            background: transparent;
+            /* Remove white background */
         }
 
         .card h3 {
             margin: 10px 0;
+            font-size: 1.5rem;
         }
 
         .card p {
             margin: 10px 0;
             flex-grow: 1;
+            color: #555;
         }
 
         .add-btn {
@@ -73,6 +83,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .carousel-button {
@@ -125,6 +136,7 @@
             margin-top: 40px;
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .special-image {
@@ -153,6 +165,217 @@
             font-size: 1rem;
             color: #555;
         }
+
+        /* Cart-specific styles */
+        .cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .cart-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item h4 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .cart-item small {
+            color: #777;
+        }
+
+        .cart-item p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #FF7F7F;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-dish {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .modal-dish model-viewer {
+            width: 150px;
+            /* Reduced size */
+            height: 150px;
+            /* Reduced size */
+        }
+
+        .dish-details {
+            flex: 1;
+        }
+
+        .dish-info {
+            margin-top: 10px;
+        }
+
+        .dish-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .order-btn,
+        .customize-btn,
+        .save-customization {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .customize-section {
+            display: none;
+            margin-top: 20px;
+            background: #FF7F7F;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .customize-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: left;
+            gap: 10px;
+        }
+
+        .option label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .option textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .customize-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -168,8 +391,7 @@
         <h2>Your Cart</h2>
         <div id="cartItems"></div>
         <p>Total: ₹<span id="cartTotal">0</span></p>
-        <button onclick="checkout()"
-            style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+        <button onclick="checkout()">Checkout</button>
     </div>
 
     <div class="indian-menu-container">
@@ -223,6 +445,37 @@
                         <p>Marinated paneer cubes grilled to perfection, served with mint chutney.</p>
                         <button class="add-btn" data-modal="modal-paneer">+</button>
                     </div>
+
+                    <!-- Aloo Paratha -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/aloo_paratha.glb" alt="3D Model" auto-rotate
+                            camera-controls ar>
+                        </model-viewer>
+                        <h3>Aloo Paratha</h3>
+                        <p>Whole wheat flatbread stuffed with spiced mashed potatoes, served with butter and pickles.
+                        </p>
+                        <button class="add-btn" data-modal="modal-aloo-paratha">+</button>
+                    </div>
+
+                    <!-- Malai Kofta -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/malai_kofta.glb" alt="3D Model" auto-rotate
+                            camera-controls ar>
+                        </model-viewer>
+                        <h3>Malai Kofta</h3>
+                        <p>Soft paneer and potato dumplings in a creamy, rich tomato-based gravy.</p>
+                        <button class="add-btn" data-modal="modal-malai-kofta">+</button>
+                    </div>
+
+                    <!-- Bhindi Masala -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/bhindi_masala.glb" alt="3D Model" auto-rotate
+                            camera-controls ar>
+                        </model-viewer>
+                        <h3>Bhindi Masala</h3>
+                        <p>Okra cooked with onions, tomatoes, and a blend of spices.</p>
+                        <button class="add-btn" data-modal="modal-bhindi-masala">+</button>
+                    </div>
                 </div>
                 <button class="carousel-button next" onclick="shiftDishes(1)">&#10095;</button>
             </section>
@@ -232,6 +485,9 @@
                 <span class="dot active" onclick="goToDish(0)"></span>
                 <span class="dot" onclick="goToDish(1)"></span>
                 <span class="dot" onclick="goToDish(2)"></span>
+                <span class="dot" onclick="goToDish(3)"></span>
+                <span class="dot" onclick="goToDish(4)"></span>
+                <span class="dot" onclick="goToDish(5)"></span>
             </div>
 
             <!-- Special Dish Section -->
@@ -259,7 +515,7 @@
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
                         <model-viewer src="../assets/menu_images/3d_glb/footer_img.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
+                            camera-controls ar style="width: 150px; height: 150px;">
                         </model-viewer>
                         <div class="dish-details">
                             <h3>Murgh Makhani</h3>
@@ -279,6 +535,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-murgh">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-murgh')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -292,14 +549,19 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraChicken"> Extra Chicken
-                                <input type="checkbox" id="extraNaan"> Naan Bread
-                                <input type="checkbox" id="extraRice"> Rice
+                                <div>
+                                    <input type="checkbox" id="extraChicken"> <label for="extraChicken">Extra
+                                        Chicken</label>
+                                    <input type="checkbox" id="extraNaan"> <label for="extraNaan">Naan Bread</label>
+                                    <input type="checkbox" id="extraRice"> <label for="extraRice">Rice</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noTomato"> No Tomatoes
-                                <input type="checkbox" id="noCream"> No Cream
+                                <div>
+                                    <input type="checkbox" id="noTomato"> <label for="noTomato">No Tomatoes</label>
+                                    <input type="checkbox" id="noCream"> <label for="noCream">No Cream</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -319,7 +581,7 @@
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
                         <model-viewer src="../assets/menu_images/3d_glb/biryani.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
+                            camera-controls ar style="width: 150px; height: 150px;">
                         </model-viewer>
                         <div class="dish-details">
                             <h3>Biryani</h3>
@@ -339,6 +601,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-biryani">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-biryani')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -352,14 +615,19 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraChicken"> Extra Chicken
-                                <input type="checkbox" id="extraNaan"> Naan Bread
-                                <input type="checkbox" id="extraRice"> Rice
+                                <div>
+                                    <input type="checkbox" id="extraChicken"> <label for="extraChicken">Extra
+                                        Chicken</label>
+                                    <input type="checkbox" id="extraNaan"> <label for="extraNaan">Naan Bread</label>
+                                    <input type="checkbox" id="extraRice"> <label for="extraRice">Rice</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noSaffron"> No Saffron
-                                <input type="checkbox" id="noCloves"> No Cloves
+                                <div>
+                                    <input type="checkbox" id="noSaffron"> <label for="noSaffron">No Saffron</label>
+                                    <input type="checkbox" id="noCloves"> <label for="noCloves">No Cloves</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -379,7 +647,7 @@
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
                         <model-viewer src="../assets/menu_images/3d_glb/pner_tikka.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
+                            camera-controls ar style="width: 150px; height: 150px;">
                         </model-viewer>
                         <div class="dish-details">
                             <h3>Paneer Tikka</h3>
@@ -399,6 +667,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-paneer">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-paneer')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -412,13 +681,20 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraPaneer"> Extra Paneer
-                                <input type="checkbox" id="extraVeggies"> Extra Veggies
+                                <div>
+                                    <input type="checkbox" id="extraPaneer"> <label for="extraPaneer">Extra
+                                        Paneer</label>
+                                    <input type="checkbox" id="extraVeggies"> <label for="extraVeggies">Extra
+                                        Veggies</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noYogurt"> No Yogurt
-                                <input type="checkbox" id="noPeppers"> No Bell Peppers
+                                <div>
+                                    <input type="checkbox" id="noYogurt"> <label for="noYogurt">No Yogurt</label>
+                                    <input type="checkbox" id="noPeppers"> <label for="noPeppers">No Bell
+                                        Peppers</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -430,6 +706,199 @@
                 </div>
             </div>
             <!-- Paneer Tikka Modal Ends -->
+
+            <!-- Aloo Paratha Modal -->
+            <div class="modal" id="modal-aloo-paratha">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/aloo_paratha.glb" alt="3D Model" auto-rotate
+                            camera-controls ar style="width: 150px; height: 150px;">
+                        </model-viewer>
+                        <div class="dish-details">
+                            <h3>Aloo Paratha</h3>
+                            <p class="dish-description">Whole wheat flatbread stuffed with spiced mashed potatoes,
+                                served with butter and pickles.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Whole Wheat Flour, Potatoes, Spices, Butter</p>
+                                <p><strong>Prep Time:</strong> 20 mins</p>
+                                <p><strong> Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price:</strong> 150</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-aloo-paratha">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-aloo-paratha')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraButter"> <label for="extraButter">Extra
+                                        Butter</label>
+                                    <input type="checkbox" id="extraPickles"> <label for="extraPickles">Extra
+                                        Pickles</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noSpices"> <label for="noSpices">No Spices</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Aloo Paratha Modal Ends -->
+
+            <!-- Malai Kofta Modal -->
+            <div class="modal" id="modal-malai-kofta">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/malai_kofta.glb" alt="3D Model" auto-rotate
+                            camera-controls ar style="width: 150px; height: 150px;">
+                        </model-viewer>
+                        <div class="dish-details">
+                            <h3>Malai Kofta</h3>
+                            <p class="dish-description">Soft paneer and potato dumplings in a creamy, rich tomato-based
+                                gravy.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Paneer, Potatoes, Tomatoes, Cream, Spices</p>
+                                <p><strong>Prep Time:</strong> 40 mins</p>
+                                <p><strong> Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price:</strong> 280</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-malai-kofta">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-malai-kofta')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraPaneer"> <label for="extraPaneer">Extra
+                                        Paneer</label>
+                                    <input type="checkbox" id="extraCream"> <label for="extraCream">Extra Cream</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noTomatoes"> <label for="noTomatoes">No Tomatoes</label>
+                                    <input type="checkbox" id="noCream"> <label for="noCream">No Cream</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Malai Kofta Modal Ends -->
+
+            <!-- Bhindi Masala Modal -->
+            <div class="modal" id="modal-bhindi-masala">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/bhindi_masala.glb" alt="3D Model" auto-rotate
+                            camera-controls ar style="width: 150px; height: 150px;">
+                        </model-viewer>
+                        <div class="dish-details">
+                            <h3>Bhindi Masala</h3>
+                            <p class="dish-description">Okra cooked with onions, tomatoes, and a blend of spices.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Okra, Onions, Tomatoes, Spices</p>
+                                <p><strong>Prep Time:</strong> 25 mins</p>
+                                <p><strong> Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price:</strong> 200</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-bhindi-masala">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-bhindi-masala')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraOkra"> <label for="extraOkra">Extra Okra</label>
+                                    <input type="checkbox" id="extraOnions"> <label for="extraOnions">Extra
+                                        Onions</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noTomatoes"> <label for="noTomatoes">No Tomatoes</label>
+                                    <input type="checkbox" id="noOnions"> <label for="noOnions">No Onions</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Bhindi Masala Modal Ends -->
         </div>
     </div>
 
@@ -472,7 +941,15 @@
 
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
+            const carouselButtons = document.querySelectorAll('.carousel-button');
+
             cartSidebar.classList.toggle('active');
+
+            // Toggle visibility of carousel buttons
+            carouselButtons.forEach(button => {
+                button.style.display = cartSidebar.classList.contains('active') ? 'none' : 'block';
+            });
+
             updateCartDisplay();
         }
 
@@ -645,6 +1122,14 @@
             modal.style.display = 'none';
             modal.querySelector('.customize-section').style.display = 'none';
             document.body.style.overflow = 'auto';
+        }
+
+        function closeCustomization(customizeSectionId) {
+            const customizeSection = document.getElementById(customizeSectionId);
+            customizeSection.style.display = 'none';
+            const modal = customizeSection.closest('.modal');
+            modal.querySelector('.customize-btn').style.display = 'block';
+            modal.querySelector('.order-btn').style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', () => {

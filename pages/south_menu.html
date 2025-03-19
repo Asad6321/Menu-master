@@ -14,12 +14,19 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        /* Add this to your existing CSS */
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+        }
+
         .menu-carousel {
             position: relative;
             overflow: hidden;
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 50px;
         }
 
         .carousel-track {
@@ -42,6 +49,7 @@
             flex-direction: column;
             align-items: center;
             text-align: center;
+            height: 400px;
         }
 
         .card:hover {
@@ -52,6 +60,34 @@
             width: 100%;
             height: 200px;
             margin: 0 auto;
+            background: transparent;
+        }
+
+        .card h3 {
+            margin: 10px 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .card p {
+            margin: 10px 0;
+            flex-grow: 1;
+            color: #555;
+        }
+
+        .add-btn {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .add-btn:hover {
+            background: #388E3C;
         }
 
         .carousel-button {
@@ -94,6 +130,277 @@
         .dot.active {
             background: #333;
         }
+
+        /* Special Dish Section Styling */
+        .special-dish {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        .special-image {
+            position: relative;
+            width: 50%;
+            z-index: 1;
+        }
+
+        .special-image model-viewer {
+            width: 100%;
+            height: 300px;
+            background: transparent;
+        }
+
+        .special-text {
+            width: 45%;
+            z-index: 0;
+        }
+
+        .special-text h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .special-text p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Cart-specific styles */
+        .cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .cart-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item h4 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #333;
+        }
+
+        .cart-item small {
+            color: #777;
+        }
+
+        .cart-item p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .cart-item-controls button:hover {
+            background: #388E3C;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background:  #FF7F7F;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .close-btn:hover {
+            color: #FFA726;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-dish {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .modal-dish model-viewer {
+            width: 150px;
+            height: 150px;
+        }
+
+        .dish-details {
+            flex: 1;
+        }
+
+        .dish-info {
+            margin-top: 10px;
+        }
+
+        .dish-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .order-btn,
+        .customize-btn,
+        .save-customization {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .order-btn:hover,
+        .customize-btn:hover,
+        .save-customization:hover {
+            background: #388E3C;
+        }
+
+        /* Customization Section Styling */
+        .customize-section {
+            display: none;
+            margin-top: 20px;
+            background:  #FF7F7F;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .customize-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .option textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .customize-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .customize-close-btn:hover {
+            color: #FFA726;
+        }
     </style>
 </head>
 
@@ -109,8 +416,7 @@
         <h2>Your Cart</h2>
         <div id="cartItems"></div>
         <p>Total: ₹<span id="cartTotal">0</span></p>
-        <button onclick="checkout()"
-            style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+        <button onclick="checkout()">Checkout</button>
     </div>
 
     <div class="indian-menu-container">
@@ -118,15 +424,15 @@
             <!-- Hero Section -->
             <section class="hero-section">
                 <div>
-                    <h1>South Indian Delights</h1>
+                    <h1>South Indian Delicacies</h1>
                     <p>
-                        Our South Indian dishes are crafted with fresh, high-quality ingredients, aromatic spices, and
-                        traditional cooking techniques. From crispy dosas to flavorful sambhar and coconut-based
-                        curries, each dish embodies the rich and diverse flavors of South India.
+                        Our dishes are crafted with fresh ingredients, rich flavors, and authentic techniques.
+                        From crispy dosas to flavorful curries, every dish is a celebration of South Indian culinary
+                        art.
                     </p>
                 </div>
                 <div class="hero-image">
-                    <img src="/assets/menu_images/southmain.jpg" alt="Main Dish">
+                    <img src="https://i.pinimg.com/736x/b1/fa/20/b1fa200bc4c18e098d72d7187f1eb857.jpg" alt="Main Dish">
                 </div>
             </section>
 
@@ -134,36 +440,62 @@
             <section class="menu-carousel">
                 <button class="carousel-button prev" onclick="shiftDishes(-1)">&#10094;</button>
                 <div class="carousel-track">
-                    <!-- Masala Dosa -->
+                    <!-- Dosa -->
                     <div class="card">
-                        <model-viewer src="../assets/menu_images/3d_glb/Dosa.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
-                        <h3>Masala Dosa</h3>
-                        <p>A crispy rice and lentil crepe filled with a spiced potato filling, served with coconut
-                            chutney and sambhar.</p>
+                        <model-viewer src="../assets/menu_images/3d_glb/dosa.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Dosa</h3>
+                        <p>A crispy, golden-brown crepe made from fermented rice and lentil batter, served with chutney
+                            and sambar.</p>
                         <button class="add-btn" data-modal="modal-dosa">+</button>
                     </div>
 
-                    <!-- Idli Sambhar -->
+                    <!-- Idli -->
                     <div class="card">
                         <model-viewer src="../assets/menu_images/3d_glb/idli.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
-                        <h3>Idli Sambhar</h3>
-                        <p>Soft and fluffy steamed rice cakes served with a flavorful lentil-based sambhar and coconut
-                            chutney.</p>
+                            camera-controls ar></model-viewer>
+                        <h3>Idli</h3>
+                        <p>Soft and fluffy steamed rice cakes, served with coconut chutney and sambar.</p>
                         <button class="add-btn" data-modal="modal-idli">+</button>
                     </div>
 
-                    <!-- Medu Vada -->
+                    <!-- Vada -->
                     <div class="card">
-                        <model-viewer src="../assets/menu_images/3d_glb/menu.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
-                        <h3>Medu Vada</h3>
-                        <p>Crispy and fluffy lentil fritters, served with coconut chutney and sambhar.</p>
+                        <model-viewer src="../assets/menu_images/3d_glb/mendu_vada.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Vada</h3>
+                        <p>Crispy, deep-fried lentil donuts, served with coconut chutney and sambar.</p>
                         <button class="add-btn" data-modal="modal-vada">+</button>
+                    </div>
+
+                    
+                    <!-- Nellore Fish Curry -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/NelloreFishCurry.glb" alt="3D Model"
+                            auto-rotate camera-controls ar></model-viewer>
+                        <h3>Nellore Fish Curry</h3>
+                        <p>A spicy and tangy fish curry from the coastal region of Nellore, made with tamarind and
+                            spices.</p>
+                        <button class="add-btn" data-modal="modal-nellore-fish-curry">+</button>
+                    </div>
+
+                    <!-- Elaneer Payasam -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/Elaneer Payasam.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Elaneer Payasam</h3>
+                        <p>A creamy and refreshing dessert made with tender coconut, coconut milk, and jaggery.</p>
+                        <button class="add-btn" data-modal="modal-elaneer-payasam">+</button>
+                    </div>
+
+                    <!-- Bisi Bele Bath -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/Bisibella.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Bisi Bele Bath</h3>
+                        <p>A traditional Karnataka dish made with rice, lentils, vegetables, and a special spice blend.
+                        </p>
+                        <button class="add-btn" data-modal="modal-bisi-bele-bath">+</button>
                     </div>
                 </div>
                 <button class="carousel-button next" onclick="shiftDishes(1)">&#10095;</button>
@@ -174,46 +506,49 @@
                 <span class="dot active" onclick="goToDish(0)"></span>
                 <span class="dot" onclick="goToDish(1)"></span>
                 <span class="dot" onclick="goToDish(2)"></span>
+                <span class="dot" onclick="goToDish(3)"></span>
+                <span class="dot" onclick="goToDish(4)"></span>
+                <span class="dot" onclick="goToDish(5)"></span>
+                <span class="dot" onclick="goToDish(6)"></span>
+                <span class="dot" onclick="goToDish(7)"></span>
+                <span class="dot" onclick="goToDish(8)"></span>
             </div>
 
             <!-- Special Dish Section -->
             <section class="special-dish">
                 <div class="special-image">
-                    <model-viewer src="../assets/menu_images/3d_glb/south_indian_dish.glb" alt="3D Model" auto-rotate
-                        camera-controls ar>
-                    </model-viewer>
+                    <model-viewer src="../assets/menu_images/3d_glb/special_dish.glb" alt="3D Model" auto-rotate
+                        camera-controls ar></model-viewer>
                 </div>
                 <div class="special-text">
-                    <h2>Our South Indian Secret</h2>
+                    <h2>Our Culinary Secret</h2>
                     <p>
-                        At our restaurant, we craft authentic South Indian dishes using the finest ingredients,
-                        aromatic spices, and traditional cooking techniques. From crispy dosas to fluffy idlis,
-                        every dish is made with passion to bring you the true taste of South India.
+                        At our restaurant, we create authentic South Indian dishes using fresh ingredients, rich
+                        flavors, and
+                        traditional techniques. From crispy dosas to flavorful curries, every dish is crafted to
+                        bring you the true taste of South India.
                     </p>
                 </div>
             </section>
 
             <!-- Modals for each dish -->
-            <!-- Masala Dosa model -->
+            <!-- Dosa Modal -->
             <div class="modal" id="modal-dosa">
                 <div class="modal-content">
                     <span class="close-btn">×</span>
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
-                        <model-viewer src="../assets/menu_images/3d_glb/Dosa.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
+                        <model-viewer src="../assets/menu_images/3d_glb/dosa.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
                         <div class="dish-details">
-                            <h3>Masala Dosa</h3>
-                            <p class="dish-description"> A crispy rice and lentil crepe filled with a spiced potato
-                                filling, served with coconut chutney and sambhar.</p>
+                            <h3>Dosa</h3>
+                            <p class="dish-description">A crispy, golden-brown crepe made from fermented rice and lentil
+                                batter, served with chutney and sambar.</p>
                             <div class="dish-info">
-                                <p><strong>Ingredients:</strong> Rice, Lentils, Potatoes, Spices, Coconut Chutney,
-                                    Sambhar
-                                </p>
-                                <p><strong>Prep Time:</strong> 30 mins</p>
-                                <p><strong> Serves:</strong> 2-3 people</p>
-                                <p class="price"><strong>Price</strong> 150</p>
+                                <p><strong>Ingredients:</strong> Rice, Lentils, Oil, Chutney, Sambar</p>
+                                <p><strong>Prep Time:</strong> 20 mins</p>
+                                <p><strong>Serves:</strong> 1-2 people</p>
+                                <p class="price"><strong>Price:</strong> 100</p>
                             </div>
                         </div>
                     </div>
@@ -222,6 +557,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-dosa">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-dosa')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -235,14 +571,19 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraPotato"> Extra Potato Filling
-                                <input type="checkbox" id="extraChutney"> Extra Coconut Chutney
-                                <input type="checkbox" id="extraSambhar"> Extra Sambhar
+                                <div>
+                                    <input type="checkbox" id="extraChutney"> <label for="extraChutney">Extra
+                                        Chutney</label>
+                                    <input type="checkbox" id="extraSambar"> <label for="extraSambar">Extra
+                                        Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noPotato"> No Potato Filling
-                                <input type="checkbox" id="noChutney"> No Coconut Chutney
+                                <div>
+                                    <input type="checkbox" id="noChutney"> <label for="noChutney">No Chutney</label>
+                                    <input type="checkbox" id="noSambar"> <label for="noSambar">No Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -253,26 +594,25 @@
                     </div>
                 </div>
             </div>
+            <!-- Dosa Modal Ends -->
 
-            <!-- Idli Sambhar model -->
+            <!-- Idli Modal -->
             <div class="modal" id="modal-idli">
                 <div class="modal-content">
                     <span class="close-btn">×</span>
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
                         <model-viewer src="../assets/menu_images/3d_glb/idli.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
+                            camera-controls ar></model-viewer>
                         <div class="dish-details">
-                            <h3>Idli Sambhar</h3>
-                            <p class="dish-description">Soft and fluffy steamed rice cakes served with a flavorful
-                                lentil-based sambhar and coconut chutney.</p>
+                            <h3>Idli</h3>
+                            <p class="dish-description">Soft and fluffy steamed rice cakes, served with coconut chutney
+                                and sambar.</p>
                             <div class="dish-info">
-                                <p><strong>Ingredients:</strong> Rice, Lentils, Sambhar, Coconut Chutney
-                                </p>
-                                <p><strong>Prep Time:</strong> 35 mins</p>
-                                <p><strong> Serves:</strong> 2-3 people</p>
-                                <p class="price"><strong>Price</strong> 120</p>
+                                <p><strong>Ingredients:</strong> Rice, Lentils, Coconut Chutney, Sambar</p>
+                                <p><strong>Prep Time:</strong> 15 mins</p>
+                                <p><strong>Serves:</strong> 1-2 people</p>
+                                <p class="price"><strong>Price:</strong> 80</p>
                             </div>
                         </div>
                     </div>
@@ -281,6 +621,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-idli">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-idli')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -294,14 +635,19 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraIdli"> Extra Idli
-                                <input type="checkbox" id="extraSambhar"> Extra Sambhar
-                                <input type="checkbox" id="extraChutney"> Extra Coconut Chutney
+                                <div>
+                                    <input type="checkbox" id="extraChutney"> <label for="extraChutney">Extra
+                                        Chutney</label>
+                                    <input type="checkbox" id="extraSambar"> <label for="extraSambar">Extra
+                                        Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noSambhar"> No Sambhar
-                                <input type="checkbox" id="noChutney"> No Coconut Chutney
+                                <div>
+                                    <input type="checkbox" id="noChutney"> <label for="noChutney">No Chutney</label>
+                                    <input type="checkbox" id="noSambar"> <label for="noSambar">No Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -312,26 +658,25 @@
                     </div>
                 </div>
             </div>
+            <!-- Idli Modal Ends -->
 
-            <!-- Medu Vada model -->
+            <!-- Vada Modal -->
             <div class="modal" id="modal-vada">
                 <div class="modal-content">
                     <span class="close-btn">×</span>
                     <h1 class="modal-title">You Made a Delicious Choice!</h1>
                     <div class="modal-dish">
-                        <model-viewer src="../assets/menu_images/3d_glb/menu.glb" alt="3D Model" auto-rotate
-                            camera-controls ar>
-                        </model-viewer>
+                        <model-viewer src="../assets/menu_images/3d_glb/mendu_vada.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
                         <div class="dish-details">
-                            <h3>Medu Vada</h3>
-                            <p class="dish-description">Crispy and fluffy lentil fritters, served with coconut chutney
-                                and sambhar.</p>
+                            <h3>Vada</h3>
+                            <p class="dish-description">Crispy, deep-fried lentil donuts, served with coconut chutney
+                                and sambar.</p>
                             <div class="dish-info">
-                                <p><strong>Ingredients:</strong> Lentils, Spices, Coconut Chutney, Sambhar
-                                </p>
-                                <p><strong>Prep Time:</strong> 40 mins</p>
-                                <p><strong> Serves:</strong> 2-3 people</p>
-                                <p class="price"><strong>Price</strong> 100</p>
+                                <p><strong>Ingredients:</strong> Lentils, Coconut Chutney, Sambar</p>
+                                <p><strong>Prep Time:</strong> 20 mins</p>
+                                <p><strong>Serves:</strong> 1-2 people</p>
+                                <p class="price"><strong>Price:</strong> 90</p>
                             </div>
                         </div>
                     </div>
@@ -340,6 +685,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-vada">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-vada')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -353,14 +699,19 @@
                             </div>
                             <div class="option">
                                 <label>Add Extra:</label>
-                                <input type="checkbox" id="extraVada"> Extra Vada
-                                <input type="checkbox" id="extraChutney"> Extra Coconut Chutney
-                                <input type="checkbox" id="extraSambhar"> Extra Sambhar
+                                <div>
+                                    <input type="checkbox" id="extraChutney"> <label for="extraChutney">Extra
+                                        Chutney</label>
+                                    <input type="checkbox" id="extraSambar"> <label for="extraSambar">Extra
+                                        Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Remove:</label>
-                                <input type="checkbox" id="noChutney"> No Coconut Chutney
-                                <input type="checkbox" id="noSambhar"> No Sambhar
+                                <div>
+                                    <input type="checkbox" id="noChutney"> <label for="noChutney">No Chutney</label>
+                                    <input type="checkbox" id="noSambar"> <label for="noSambar">No Sambar</label>
+                                </div>
                             </div>
                             <div class="option">
                                 <label>Special Notes:</label>
@@ -371,10 +722,213 @@
                     </div>
                 </div>
             </div>
+            <!-- Vada Modal Ends -->
+
+            
+
+           
+            <!-- Nellore Fish Curry Modal -->
+            <div class="modal" id="modal-nellore-fish-curry">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/NelloreFishCurry.glb" alt="3D Model"
+                            auto-rotate camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Nellore Fish Curry</h3>
+                            <p class="dish-description">A spicy and tangy fish curry from the coastal region of Nellore,
+                                made with tamarind and spices.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Fish, Tamarind, Spices, Curry Leaves, Mustard Seeds</p>
+                                <p><strong>Prep Time:</strong> 40 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price:</strong> 300</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-nellore-fish-curry">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-nellore-fish-curry')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraFish"> <label for="extraFish">Extra Fish</label>
+                                    <input type="checkbox" id="extraTamarind"> <label for="extraTamarind">Extra
+                                        Tamarind</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noFish"> <label for="noFish">No Fish</label>
+                                    <input type="checkbox" id="noTamarind"> <label for="noTamarind">No Tamarind</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Nellore Fish Curry Modal Ends -->
+
+            <!-- Elaneer Payasam Modal -->
+            <div class="modal" id="modal-elaneer-payasam">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/Elaneer Payasam.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Elaneer Payasam</h3>
+                            <p class="dish-description">A creamy and refreshing dessert made with tender coconut,
+                                coconut milk, and jaggery.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Tender Coconut, Coconut Milk, Jaggery, Cardamom</p>
+                                <p><strong>Prep Time:</strong> 25 mins</p>
+                                <p><strong>Serves:</strong> 4-6 people</p>
+                                <p class="price"><strong>Price:</strong> 100</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-elaneer-payasam">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-elaneer-payasam')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Sweetness Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Sweet</option>
+                                    <option>Extra Sweet</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraCoconut"> <label for="extraCoconut">Extra
+                                        Coconut</label>
+                                    <input type="checkbox" id="extraJaggery"> <label for="extraJaggery">Extra
+                                        Jaggery</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noCoconut"> <label for="noCoconut">No Coconut</label>
+                                    <input type="checkbox" id="noJaggery"> <label for="noJaggery">No Jaggery</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less sugar, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Elaneer Payasam Modal Ends -->
+
+            <!-- Bisi Bele Bath Modal -->
+            <div class="modal" id="modal-bisi-bele-bath">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/Bisibella.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Bisi Bele Bath</h3>
+                            <p class="dish-description">A traditional Karnataka dish made with rice, lentils,
+                                vegetables, and a special spice blend.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Rice, Lentils, Vegetables, Spices, Ghee</p>
+                                <p><strong>Prep Time:</strong> 45 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price:</strong> 150</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-bisi-bele-bath">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-bisi-bele-bath')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <div>
+                                    <input type="checkbox" id="extraGhee"> <label for="extraGhee">Extra Ghee</label>
+                                    <input type="checkbox" id="extraVegetables"> <label for="extraVegetables">Extra
+                                        Vegetables</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <div>
+                                    <input type="checkbox" id="noGhee"> <label for="noGhee">No Ghee</label>
+                                    <input type="checkbox" id="noVegetables"> <label for="noVegetables">No
+                                        Vegetables</label>
+                                </div>
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Bisi Bele Bath Modal Ends -->
         </div>
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function () {
+            emailjs.init('uqI2tRF7CahmHk8q1'); // Replace with your EmailJS public key
+        })();
+
         // JavaScript for Carousel Functionality
         let currentIndex = 0;
         const carouselTrack = document.querySelector('.carousel-track');
@@ -402,16 +956,21 @@
             });
         }
 
-        // JavaScript for Cart Functionality
-        (function () {
-            emailjs.init('uqI2tRF7CahmHk8q1'); // Replace with your EmailJS public key
-        })();
-
+        // Cart Functionality
         let cart = [];
         const menuContainer = document.querySelector('.menu-container');
+
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
+            const carouselButtons = document.querySelectorAll('.carousel-button');
+
             cartSidebar.classList.toggle('active');
+
+            // Toggle visibility of carousel buttons
+            carouselButtons.forEach(button => {
+                button.style.display = cartSidebar.classList.contains('active') ? 'none' : 'block';
+            });
+
             updateCartDisplay();
         }
 
@@ -437,20 +996,20 @@
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
 
             cartItems.innerHTML = cart.map((item, index) => `
-        <div class="cart-item">
-            <div>
-                <h4>${item.name}</h4>
-                ${item.customizations ? `<small>${formatCustomizations(item.customizations)}</small>` : ''}
-                <p>₹${item.price * item.quantity}</p>
-            </div>
-            <div class="cart-item-controls">
-                <button onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
-                <span>${item.quantity}</span>
-                <button onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
-                <button onclick="removeItem(${index})">×</button>
-            </div>
-        </div>
-    `).join('');
+                <div class="cart-item">
+                    <div>
+                        <h4>${item.name}</h4>
+                        ${item.customizations ? `<small>${formatCustomizations(item.customizations)}</small>` : ''}
+                        <p>₹${item.price * item.quantity}</p>
+                    </div>
+                    <div class="cart-item-controls">
+                        <button onclick="updateQuantity(${index}, ${item.quantity - 1})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="updateQuantity(${index}, ${item.quantity + 1})">+</button>
+                        <button onclick="removeItem(${index})">×</button>
+                    </div>
+                </div>
+            `).join('');
 
             cartTotal.textContent = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
@@ -523,10 +1082,12 @@
          ${item.customizations ? 'Customizations: ' + formatCustomizations(item.customizations) : ''}`
             ).join('\n');
 
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
             const emailData = {
                 to_email: "sujalbagde27@gmail.com",
                 subject: "New Order Received!",
-                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`
+                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${totalAmount}`
             };
 
             // Send email using EmailJS
@@ -536,7 +1097,8 @@
                     cart = [];
                     updateCartDisplay();
                     document.getElementById('cartSidebar').classList.remove('active');
-                }, (error) => {
+                })
+                .catch((error) => {
                     alert('Failed to send order. Please try again.');
                     console.error('Email failed:', error);
                 });
@@ -583,6 +1145,14 @@
             document.body.style.overflow = 'auto';
         }
 
+        function closeCustomization(customizeSectionId) {
+            const customizeSection = document.getElementById(customizeSectionId);
+            customizeSection.style.display = 'none';
+            const modal = customizeSection.closest('.modal');
+            modal.querySelector('.customize-btn').style.display = 'block';
+            modal.querySelector('.order-btn').style.display = 'block';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Update add button event listeners
             document.querySelectorAll('.add-btn').forEach(button => {
@@ -624,8 +1194,8 @@
             to { transform: scale(1); }
         }
         @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+            from { opacity: 1); }
+            to { opacity: 0); }
         }
     `;
         document.head.appendChild(styleSheet);

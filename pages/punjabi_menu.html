@@ -19,7 +19,7 @@
             position: relative;
             overflow: hidden;
             width: 100%;
-            padding: 20px 0;
+            padding: 50px 0;
         }
 
         .carousel-track {
@@ -371,7 +371,6 @@
                 </div>
             </div>
             <!-- Sarson ka Saag Modal Ends -->
-
             <!-- Chole Bhature Modal -->
             <div class="modal" id="modal-chole-bhature">
                 <div class="modal-content">
@@ -644,7 +643,6 @@
                 cartItem.name === item.name &&
                 JSON.stringify(cartItem.customizations) === JSON.stringify(item.customizations)
             );
-
             if (existingItem) {
                 existingItem.quantity++;
             } else {
@@ -657,9 +655,7 @@
             const cartCount = document.getElementById('cartCount');
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
-
             cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-
             cartItems.innerHTML = cart.map((item, index) => `
                 <div class="cart-item">
                     <div>

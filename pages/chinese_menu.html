@@ -14,12 +14,19 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
-        /* Add this to your existing CSS */
+        /* General Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+        }
+
         .menu-carousel {
             position: relative;
             overflow: hidden;
             width: 100%;
-            padding: 20px 0;
+            padding: 20px 50px;
         }
 
         .carousel-track {
@@ -43,7 +50,6 @@
             align-items: center;
             text-align: center;
             height: 400px;
-            /* Set a fixed height for the card */
         }
 
         .card:hover {
@@ -53,20 +59,20 @@
         model-viewer {
             width: 100%;
             height: 200px;
-            /* Set a fixed height for the 3D model */
             margin: 0 auto;
-            background: #f0f0f0;
-            /* Optional: Add a background color for better visibility */
+            background: transparent;
+            /* Remove white background */
         }
 
         .card h3 {
             margin: 10px 0;
+            font-size: 1.5rem;
         }
 
         .card p {
             margin: 10px 0;
             flex-grow: 1;
-            /* Allow the description to take up remaining space */
+            color: #555;
         }
 
         .add-btn {
@@ -77,6 +83,7 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
         }
 
         .carousel-button {
@@ -119,6 +126,256 @@
         .dot.active {
             background: #333;
         }
+
+        /* Special Dish Section Styling */
+        .special-dish {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .special-image {
+            position: relative;
+            width: 50%;
+            z-index: 1;
+        }
+
+        .special-image model-viewer {
+            width: 100%;
+            height: 300px;
+            background: transparent;
+        }
+
+        .special-text {
+            width: 45%;
+            z-index: 0;
+        }
+
+        .special-text h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .special-text p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Cart-specific styles */
+        .cart-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .cart-icon {
+            font-size: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: red;
+            color: white;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            right: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .cart-item h4 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+
+        .cart-item small {
+            color: #777;
+        }
+
+        .cart-item p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-item-controls button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Modal Styling */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
+
+        .modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .modal-dish {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .modal-dish model-viewer {
+            width: 150px;
+            /* Reduced size */
+            height: 150px;
+            /* Reduced size */
+        }
+
+        .dish-details {
+            flex: 1;
+        }
+
+        .dish-info {
+            margin-top: 10px;
+        }
+
+        .dish-info p {
+            margin: 5px 0;
+            color: #555;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .order-btn,
+        .customize-btn,
+        .save-customization {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .customize-section {
+            display: none;
+            margin-top: 20px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+        }
+
+        .customize-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option label {
+            min-width: 120px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .option input[type="checkbox"] {
+            margin: 0;
+        }
+
+        .option textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+
+        .customize-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #333;
+        }
     </style>
 </head>
 
@@ -134,8 +391,7 @@
         <h2>Your Cart</h2>
         <div id="cartItems"></div>
         <p>Total: ₹<span id="cartTotal">0</span></p>
-        <button onclick="checkout()"
-            style="background: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">Checkout</button>
+        <button onclick="checkout()">Checkout</button>
     </div>
 
     <div class="indian-menu-container">
@@ -188,6 +444,36 @@
                             perfect blend of flavors.</p>
                         <button class="add-btn" data-modal="modal-fried">+</button>
                     </div>
+
+                    <!-- Egg Tarts -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/egg_tarts.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Egg Tarts</h3>
+                        <p>Delicious and creamy egg custard tarts with a flaky pastry crust, a popular Chinese dessert.
+                        </p>
+                        <button class="add-btn" data-modal="modal-egg-tarts">+</button>
+                    </div>
+
+                    <!-- Cantonese Chow Mein -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/cantonese_chow_mein.glb" alt="3D Model"
+                            auto-rotate camera-controls ar></model-viewer>
+                        <h3>Cantonese Chow Mein</h3>
+                        <p>Stir-fried noodles with a mix of vegetables, meat, and a savory sauce, a classic Cantonese
+                            dish.</p>
+                        <button class="add-btn" data-modal="modal-cantonese-chow-mein">+</button>
+                    </div>
+
+                    <!-- Chow Fun (Flat Rice Noodles) -->
+                    <div class="card">
+                        <model-viewer src="../assets/menu_images/3d_glb/chow_fun.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <h3>Chow Fun (Flat Rice Noodles)</h3>
+                        <p>Stir-fried flat rice noodles with beef, bean sprouts, and green onions, a staple in Chinese
+                            cuisine.</p>
+                        <button class="add-btn" data-modal="modal-chow-fun">+</button>
+                    </div>
                 </div>
                 <button class="carousel-button next" onclick="shiftDishes(1)">&#10095;</button>
             </section>
@@ -197,6 +483,9 @@
                 <span class="dot active" onclick="goToDish(0)"></span>
                 <span class="dot" onclick="goToDish(1)"></span>
                 <span class="dot" onclick="goToDish(2)"></span>
+                <span class="dot" onclick="goToDish(3)"></span>
+                <span class="dot" onclick="goToDish(4)"></span>
+                <span class="dot" onclick="goToDish(5)"></span>
             </div>
 
             <!-- Special Dish Section -->
@@ -243,6 +532,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-kung">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-kung')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -302,6 +592,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-dim">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-dim')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -360,6 +651,7 @@
                         <button class="customize-btn">Customize Your Dish</button>
                     </div>
                     <div class="customize-section" id="customize-fried">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-fried')">×</span>
                         <h2>Customize Your Delight</h2>
                         <div class="customize-options">
                             <div class="option">
@@ -392,10 +684,192 @@
                 </div>
             </div>
             <!-- Fried Rice Modal Ends -->
+
+            <!-- Egg Tarts Modal -->
+            <div class="modal" id="modal-egg-tarts">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/egg_tarts.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Egg Tarts</h3>
+                            <p class="dish-description">Delicious and creamy egg custard tarts with a flaky pastry
+                                crust, a popular Chinese dessert.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Eggs, Milk, Sugar, Pastry Dough</p>
+                                <p><strong>Prep Time:</strong> 30 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 150</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-egg-tarts">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-egg-tarts')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Sweetness Level:</label>
+                                <select>
+                                    <option>Low</option>
+                                    <option>Medium</option>
+                                    <option>High</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraCustard"> Extra Custard
+                                <input type="checkbox" id="extraPastry"> Extra Pastry
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noSugar"> No Sugar
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less sweet, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Egg Tarts Modal Ends -->
+
+            <!-- Cantonese Chow Mein Modal -->
+            <div class="modal" id="modal-cantonese-chow-mein">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/cantonese_chow_mein.glb" alt="3D Model"
+                            auto-rotate camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Cantonese Chow Mein</h3>
+                            <p class="dish-description">Stir-fried noodles with a mix of vegetables, meat, and a savory
+                                sauce, a classic Cantonese dish.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Noodles, Vegetables, Chicken/Beef, Soy Sauce, Oyster
+                                    Sauce</p>
+                                <p><strong>Prep Time:</strong> 25 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 350</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-cantonese-chow-mein">
+                        <span class="customize-close-btn"
+                            onclick="closeCustomization('customize-cantonese-chow-mein')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraVegetables"> Extra Vegetables
+                                <input type="checkbox" id="extraMeat"> Extra Meat
+                                <input type="checkbox" id="extraNoodles"> Extra Noodles
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noSoySauce"> No Soy Sauce
+                                <input type="checkbox" id="noOysterSauce"> No Oyster Sauce
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Cantonese Chow Mein Modal Ends -->
+
+            <!-- Chow Fun (Flat Rice Noodles) Modal -->
+            <div class="modal" id="modal-chow-fun">
+                <div class="modal-content">
+                    <span class="close-btn">×</span>
+                    <h1 class="modal-title">You Made a Delicious Choice!</h1>
+                    <div class="modal-dish">
+                        <model-viewer src="../assets/menu_images/3d_glb/chow_fun.glb" alt="3D Model" auto-rotate
+                            camera-controls ar></model-viewer>
+                        <div class="dish-details">
+                            <h3>Chow Fun (Flat Rice Noodles)</h3>
+                            <p class="dish-description">Stir-fried flat rice noodles with beef, bean sprouts, and green
+                                onions, a staple in Chinese cuisine.</p>
+                            <div class="dish-info">
+                                <p><strong>Ingredients:</strong> Flat Rice Noodles, Beef, Bean Sprouts, Green Onions,
+                                    Soy Sauce</p>
+                                <p><strong>Prep Time:</strong> 20 mins</p>
+                                <p><strong>Serves:</strong> 2-3 people</p>
+                                <p class="price"><strong>Price</strong> 300</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-buttons">
+                        <button class="order-btn">Place Order</button>
+                        <button class="customize-btn">Customize Your Dish</button>
+                    </div>
+                    <div class="customize-section" id="customize-chow-fun">
+                        <span class="customize-close-btn" onclick="closeCustomization('customize-chow-fun')">×</span>
+                        <h2>Customize Your Delight</h2>
+                        <div class="customize-options">
+                            <div class="option">
+                                <label>Spice Level:</label>
+                                <select>
+                                    <option>Mild</option>
+                                    <option>Medium</option>
+                                    <option>Spicy</option>
+                                    <option>Extra Spicy</option>
+                                </select>
+                            </div>
+                            <div class="option">
+                                <label>Add Extra:</label>
+                                <input type="checkbox" id="extraBeef"> Extra Beef
+                                <input type="checkbox" id="extraBeanSprouts"> Extra Bean Sprouts
+                                <input type="checkbox" id="extraNoodles"> Extra Noodles
+                            </div>
+                            <div class="option">
+                                <label>Remove:</label>
+                                <input type="checkbox" id="noSoySauce"> No Soy Sauce
+                                <input type="checkbox" id="noBeanSprouts"> No Bean Sprouts
+                            </div>
+                            <div class="option">
+                                <label>Special Notes:</label>
+                                <textarea placeholder="E.g., Less oil, gluten-free..."></textarea>
+                            </div>
+                        </div>
+                        <button class="save-customization">Save & Order</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Chow Fun (Flat Rice Noodles) Modal Ends -->
         </div>
     </div>
 
     <script>
+        // Initialize EmailJS
+        (function () {
+            emailjs.init('uqI2tRF7CahmHk8q1'); // Replace with your EmailJS public key
+        })();
+
         // JavaScript for Carousel Functionality
         let currentIndex = 0;
         const carouselTrack = document.querySelector('.carousel-track');
@@ -429,7 +903,15 @@
 
         function toggleCart() {
             const cartSidebar = document.getElementById('cartSidebar');
+            const carouselButtons = document.querySelectorAll('.carousel-button');
+
             cartSidebar.classList.toggle('active');
+
+            // Toggle visibility of carousel buttons
+            carouselButtons.forEach(button => {
+                button.style.display = cartSidebar.classList.contains('active') ? 'none' : 'block';
+            });
+
             updateCartDisplay();
         }
 
@@ -541,10 +1023,12 @@
          ${item.customizations ? 'Customizations: ' + formatCustomizations(item.customizations) : ''}`
             ).join('\n');
 
+            const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
             const emailData = {
                 to_email: "sujalbagde27@gmail.com",
                 subject: "New Order Received!",
-                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)}`
+                message: `One new order needs to be ready!\n\nOrder Details:\n${orderDetails}\n\nTotal: ₹${totalAmount}`
             };
 
             // Send email using EmailJS
@@ -554,7 +1038,8 @@
                     cart = [];
                     updateCartDisplay();
                     document.getElementById('cartSidebar').classList.remove('active');
-                }, (error) => {
+                })
+                .catch((error) => {
                     alert('Failed to send order. Please try again.');
                     console.error('Email failed:', error);
                 });
@@ -601,17 +1086,20 @@
             document.body.style.overflow = 'auto';
         }
 
+        function closeCustomization(customizeSectionId) {
+            const customizeSection = document.getElementById(customizeSectionId);
+            customizeSection.style.display = 'none';
+            const modal = customizeSection.closest('.modal');
+            modal.querySelector('.customize-btn').style.display = 'block';
+            modal.querySelector('.order-btn').style.display = 'block';
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             // Update add button event listeners
             document.querySelectorAll('.add-btn').forEach(button => {
                 button.addEventListener('click', (e) => {
                     const modalId = e.target.dataset.modal;
                     const modal = document.getElementById(modalId);
-
-                    if (!modal) {
-                        console.error(`Modal with id ${modalId} not found!`);
-                        return;
-                    }
 
                     // Reset customization section
                     modal.querySelector('.customize-section').style.display = 'none';
